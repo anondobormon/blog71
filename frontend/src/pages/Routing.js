@@ -13,7 +13,7 @@ import SingleBlog from "../components/Dashboard/SingleBlog";
 import Header from "../components/Home/Header";
 import { Home } from "../components/Home/Home";
 import DashboardLayout from "../components/Layout/DashboardLayout";
-import Hfront from "../components/Layout/Hfront";
+import Nav from "../components/Navbar/Nav";
 import NotFound from "../components/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import About from "../components/User/About";
@@ -30,7 +30,7 @@ function Routing() {
       <Route path="/" element={<Home />}>
         <Route index element={<Header />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/header" element={<Hfront />} />
+        <Route path="/header" element={<Nav />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/profile/:username/:id" element={<UserProfile />}>

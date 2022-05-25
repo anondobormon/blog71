@@ -11,10 +11,11 @@ import {
   unFollow,
 } from "../../actions/userAction";
 import { FOLLOW_RESET } from "../../constants/userConstants";
+import MetaData from "../../utils/MetaData";
 import slugify from "../../utils/SlugGenerator";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
-import Navbar from "../Navbar/Navbar";
+import Nav from "../Navbar/Nav";
 import UserContainer from "./UserContainer";
 
 export default function UserProfile() {
@@ -80,7 +81,8 @@ export default function UserProfile() {
       ) : (
         user && (
           <>
-            <Navbar />
+            <Nav />
+            <MetaData title={user?.name} />
             <Container
               component={
                 <div className="flex items-center justify-center w-full">

@@ -11,7 +11,7 @@ import BlogCard from "../Blog/Card/BlogCard";
 import Card from "../Blog/Card/Card";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
-import Navbar from "../Navbar/Navbar";
+import Nav from "../Navbar/Nav";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -52,13 +52,13 @@ export default function Header() {
       {loading ? (
         <Loader />
       ) : (
-        <div>
-          <Navbar />
+        <div className="relative">
+          <Nav />
           <MetaData title="Blog Home" description="Blog Home" />
           <Container
             component={
               <>
-                <div className="relative border md:grid grid-cols-12 gap-3">
+                <div className="relative md:grid mt-4 grid-cols-12 gap-3">
                   {/* Top Blogs */}
 
                   <div className="col-span-9">
@@ -68,9 +68,9 @@ export default function Header() {
 
                     {/* Other blogs */}
 
-                    <div className=" border p-4 my-4 rounded">
+                    <div className=" py-4 my-4 rounded">
                       <h2 className="text-md font-medium mb-4">Recent Blogs</h2>
-                      <div className="md:grid grid-cols-3 gap-3">
+                      <div className="md:grid grid-cols-2 gap-3">
                         {blogs &&
                           blogs.map((blog, index) => (
                             <div key={index} className="col-span-1">
@@ -91,7 +91,7 @@ export default function Header() {
                       />
                     </Stack>
                   </div>
-                  <div className="col-span-3  relative">
+                  <div className="col-span-3 z-0 relative">
                     <div className="fixed ">
                       <div className="overflow-y-auto m-h-80vh">
                         <h2 className="text-xl mb-4 font-bold">Top Blog's</h2>

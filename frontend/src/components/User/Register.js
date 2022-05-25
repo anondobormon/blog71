@@ -24,7 +24,7 @@ export default function Register() {
   const navigate = useNavigate();
   let location = useLocation();
 
-  const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const redirect = location.search ? location.search.split("=")[1] : "/";
   const { error, isAuthenticated, loading } = useSelector(
     (state) => state.user
   );
