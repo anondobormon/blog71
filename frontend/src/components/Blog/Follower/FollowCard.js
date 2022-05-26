@@ -8,7 +8,6 @@ export default function FollowCard({ follower, show }) {
   const dispatch = useDispatch();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { message, success, error } = useSelector((state) => state.follow);
   const { user: loadUser } = useSelector((state) => state.user);
 
   return (

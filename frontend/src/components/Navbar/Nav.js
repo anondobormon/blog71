@@ -10,21 +10,16 @@ export default function Nav() {
   const [show, setShow] = useState(null);
   const [profile, setProfile] = useState(false);
   const dispatch = useDispatch();
-  const { isAuthenticated, loading, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const [width, setWidth] = useState(1000);
   const [height, setHeight] = useState(0);
 
-  const updateWidthAndHeight = () => {
-    setWidth(window.innerWidth);
-  };
   const updateScroll = () => {
     setHeight(window.scrollY);
   };
 
   useEffect(() => {
-    window.addEventListener("resize", updateWidthAndHeight);
     window.addEventListener("scroll", updateScroll);
   });
 

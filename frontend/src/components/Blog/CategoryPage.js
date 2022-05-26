@@ -12,15 +12,13 @@ export default function CategoryPage() {
   const dispatch = useDispatch();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const {
-    loading,
-    error,
-    category: categoryData,
-  } = useSelector((state) => state.category);
+  const { loading, category: categoryData } = useSelector(
+    (state) => state.category
+  );
 
   useEffect(() => {
     dispatch(getACategory(category));
-  }, [dispatch]);
+  }, [dispatch, category]);
 
   let newTime = function (d) {
     let date = new Date(d);

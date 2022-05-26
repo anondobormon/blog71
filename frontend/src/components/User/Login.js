@@ -14,7 +14,7 @@ export default function Login() {
   const navigate = useNavigate();
   let location = useLocation();
 
-  const { error, isAuthenticated, user, loading } = useSelector(
+  const { error, isAuthenticated, user,  } = useSelector(
     (state) => state.user
   );
 
@@ -41,7 +41,7 @@ export default function Login() {
       });
       navigate(from, { replace: true });
     }
-  }, [dispatch, error, isAuthenticated, navigate, user]);
+  }, [dispatch, error, isAuthenticated, navigate, user, from]);
 
   return (
     <Container
@@ -148,7 +148,6 @@ export default function Login() {
                   <div className="w-8 h-8">
                     <img
                       src="https://i.ibb.co/xLtZCRT/Mask-Group.png"
-                      alt="profile picture"
                       className="w-full h-full"
                     />
                   </div>

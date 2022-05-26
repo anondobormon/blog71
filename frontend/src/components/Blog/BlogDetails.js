@@ -61,6 +61,12 @@ export default function BlogDetails() {
       });
       dispatch(clearError());
     }
+    if (blogsError) {
+      toast.error(blogsError, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      dispatch(clearError());
+    }
     if (success) {
       toast.success("Comment Added successfully", {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -78,7 +84,7 @@ export default function BlogDetails() {
       setAnchorEl(null);
       dispatch({ type: COMMENT_DELETE_RESET });
     }
-  }, [success, commentError, dispatch, isDeleted]);
+  }, [success, commentError, dispatch, isDeleted, blogsError]);
 
   useEffect(() => {
     if (error) {

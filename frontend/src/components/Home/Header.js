@@ -16,7 +16,6 @@ import Nav from "../Navbar/Nav";
 export default function Header() {
   const dispatch = useDispatch();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [show, setShow] = useState(true);
 
   const [pageValue, setPageValue] = useState(1);
   const [keyword, setKeyword] = useState("");
