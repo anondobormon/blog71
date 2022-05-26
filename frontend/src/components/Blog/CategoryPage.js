@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getACategory } from "../../actions/categoryAction";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
-import Navbar from "../Navbar/Navbar";
+import Nav from "../Navbar/Nav";
 import Card from "./Card/Card";
 
 export default function CategoryPage() {
@@ -35,7 +35,7 @@ export default function CategoryPage() {
         <Loader />
       ) : (
         <>
-          <Navbar />
+          <Nav />
           <Container
             component={
               <>
