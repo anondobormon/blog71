@@ -204,8 +204,6 @@ exports.deleteBlog = asyncError(async (req, res, next) => {
   // removed image
   fs.unlinkSync(`${__dirname}/../public/uploads/${blog.coverImage?.trim()}`);
 
-  await blog.remove();
-
   await category.updateOne({
     $pull: { blogs: blog._id },
   });
