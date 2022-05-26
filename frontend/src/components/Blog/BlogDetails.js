@@ -19,7 +19,7 @@ import {
 import MetaData from "../../utils/MetaData";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
-import Navbar from "../Navbar/Navbar";
+import Nav from "../Navbar/Nav";
 import SubHeader from "../SubHeader/SubHeader";
 import FollowCard from "./Follower/FollowCard";
 
@@ -140,7 +140,7 @@ export default function BlogDetails() {
         <div>
           {blog && (
             <div>
-              <Navbar />
+              <Nav />
               <MetaData
                 title={"Blog Details"}
                 description={blog?.description}

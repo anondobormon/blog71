@@ -16,11 +16,11 @@ export default function BlogCard({ blog, heading }) {
       </div>
       {/* <img src="/uploads/cover.jpg" alt="" /> */}
 
-      <div className="flex justify-between p-4 w-full">
-        <div className="min-w-fit px-2 font-bold text-xs rounded rounded-2xl flex justify-center items-center bg-pink-100 text-pink-600 uppercase">
+      <div className="flex justify-between items-center p-4 w-full">
+        <div className="min-w-fit px-2 font-bold text-xs h-full p-1 rounded-2xl flex justify-center items-center bg-pink-100 text-pink-600 uppercase">
           politics
         </div>
-        <div className="flex gap-4 font-light text-xs ">
+        <div className="md:flex gap-4 font-light text-xs ">
           <div>
             View: <span className="font-bold mx-1">5.3k</span>{" "}
           </div>
@@ -35,14 +35,14 @@ export default function BlogCard({ blog, heading }) {
       </div>
       <Link
         to={`/blog/${blog?._id}`}
-        className="hading font-bold text-xl  hover:text-indigo-500"
+        className="hading md:ml-5 font-medium text-sm capitalize hover:text-indigo-500"
       >
         {blog?.title}
       </Link>
 
       {heading && (
-        <div className="flex justify-between items-center p-4">
-          <div className="flex items-center gap-2">
+        <div className="md:flex justify-between items-center md:p-4 px-0 py-2">
+          <div className="flex items-center mb-4 gap-2">
             <div className="w-10 h-10 rounded-full border-2 flex items-center content-center overflow-hidden ">
               <img className="w-full" src={PF + `avatar.png`} alt="" />
             </div>

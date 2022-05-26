@@ -9,9 +9,9 @@
 
 .line-shorter {
   white-space: nowrap;
+  width: 230px;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 40ch;
 }
 .m-h-80vh {
   max-height: 80vh;

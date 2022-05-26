@@ -9,6 +9,7 @@ import "./Nav.scss";
 export default function Nav() {
   const [show, setShow] = useState(null);
   const [profile, setProfile] = useState(false);
+  const [keyword, setKeyword] = useState("");
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -37,7 +38,7 @@ export default function Nav() {
     >
       {/* Code block starts */}
       <nav className="w-full bg-white hidden xl:block shadow">
-        <div className="container px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto">
+        <div className="mx-auto  max-w-6xl h-16 flex justify-between items-center lg:items-stretch ">
           <div className="flex items-center">
             <div className="mr-10 flex items-center">
               <svg
@@ -57,9 +58,12 @@ export default function Nav() {
                   />
                 </g>
               </svg>
-              <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight ml-3 hidden lg:block">
+              <Link
+                to="/"
+                className="text-base text-gray-800 font-bold tracking-normal leading-tight ml-3 hidden lg:block"
+              >
                 The North
-              </h3>
+              </Link>
             </div>
             <ul className="hidden xl:flex items-center h-full">
               <li className="cursor-pointer h-full flex items-center text-sm text-indigo-700 tracking-normal transition duration-150 ease-in-out">
@@ -78,29 +82,31 @@ export default function Nav() {
           </div>
           <div className="h-full hidden xl:flex items-center justify-end">
             <div className="h-full flex">
-              <div className="px-6 h-full flex items-center justify-center  text-gray-400 flex items-center">
+              <div className="px-6 h-full flex items-center justify-center  text-gray-400 ">
                 <input
                   type="text"
+                  onChange={(e) => setKeyword(e.target.value)}
                   className="bg-transparent focus:outline-none text-xs transition duration-150 ease-in-out"
                   placeholder="Type something..."
                 />
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="icon icon-tabler icon-tabler-search cursor-pointer hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                  width={28}
-                  height={28}
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <circle cx={10} cy={10} r={7} />
-                  <line x1={21} y1={21} x2={15} y2={15} />
-                </svg>
+                <Link to={`/blogs/${keyword}`}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-search cursor-pointer hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                    width={28}
+                    height={28}
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <circle cx={10} cy={10} r={7} />
+                    <line x1={21} y1={21} x2={15} y2={15} />
+                  </svg>
+                </Link>
               </div>
 
               <div className="w-10 h-full flex items-center justify-center  cursor-pointer text-gray-400">
