@@ -15,7 +15,6 @@ import "./Header.scss";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const pageValue = 1;
   const keyword = "";
