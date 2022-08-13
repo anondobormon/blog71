@@ -7,7 +7,6 @@ import { logout } from "../../actions/userAction";
 export default function DashboardLayout() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
