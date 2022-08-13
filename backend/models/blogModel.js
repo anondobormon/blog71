@@ -23,8 +23,14 @@ const blogSchema = new mongoose.Schema(
       required: [true, "Please write blog title"],
     },
     coverImage: {
-      type: String,
-      default: "pexels-irina-iriser-1405691.jpg",
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
     comments: [
       {
@@ -33,8 +39,14 @@ const blogSchema = new mongoose.Schema(
           ref: "User",
         },
         profilePicture: {
-          type: String,
-          default: "avatar.png",
+          public_id: {
+            type: String,
+            required: true,
+          },
+          url: {
+            type: String,
+            required: true,
+          },
         },
         name: {
           type: String,

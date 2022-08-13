@@ -7,16 +7,29 @@ const asyncError = require("../middleware/asyncError");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
 const ErrorHandler = require("../utils/errorHandler");
+// const { cloudinary } = require("../utils/cloudinary");
+const cloudinary = require("cloudinary").v2;
 
 //Register a user
 exports.registerUser = asyncError(async (req, res, next) => {
-  const { email, name, password } = req.body;
+  const avatar = req.body.file;
 
+  let myCloud = await cloudinary.uploader.upload(avatar, {
+    folder: "blog71/avatars",
+    width: "450",
+    crop: "scale",
+  });
+
+  // console.log(myCloud);
+  const { email, name, password } = req.body;
   const user = await User.create({
     name,
     email,
     password,
-    profilePicture: req.file.filename,
+    profilePicture: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
   });
 
   sendToken(user, 201, res);
@@ -222,7 +235,7 @@ exports.saveBlogs = asyncError(async (req, res, next) => {
     });
     res.status(200).json({
       success: true,
-      isSaved: false,
+      isSaved: true,
     });
   }
 });

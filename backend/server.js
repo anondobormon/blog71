@@ -6,6 +6,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const helmet = require("helmet");
+const cloudinary = require("cloudinary").v2;
+const fileUpload = require("express-fileupload");
 
 //Internal Imports
 const connectDatabase = require("./database/database");
@@ -18,11 +20,14 @@ const blogRouter = require("./routes/blogRoute");
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 //configuration
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 app.use(helmet());
+app.use(fileUpload());
 
 //Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -35,6 +40,13 @@ process.on("uncaughtException", (err) => {
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/config.env" });
 }
+
+//Cloudinary
+cloudinary.config({
+  cloud_name: process.env.COLUDINARY_NAME,
+  api_key: process.env.COLUDINARY_API_KEY,
+  api_secret: process.env.COLUDINARY_API_SECRET,
+});
 
 //Routes
 app.use("/api/blog", userRouter);

@@ -18,7 +18,7 @@ export default function RecentBlogCard({ blog }) {
         )}
 
         <Link to={`/blog/${blog?._id}`} className="">
-          <img className="w-full" src={PF + blog?.coverImage} alt="" />
+          <img className="w-full" src={blog?.coverImage.url} alt="" />
         </Link>
       </div>
 

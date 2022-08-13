@@ -62,7 +62,7 @@ export default function Nav() {
                 to="/"
                 className="text-base text-gray-800 font-bold tracking-normal leading-tight ml-3 hidden lg:block"
               >
-                The North
+                Blog 71
               </Link>
             </div>
             <ul className="hidden xl:flex items-center h-full">
@@ -272,7 +272,7 @@ export default function Nav() {
                     )}
                     <img
                       className="rounded-full h-8 w-8 object-cover"
-                      src={PF + user?.profilePicture}
+                      src={user?.profilePicture.url}
                       alt="logo"
                     />
                     <p className="text-gray-800 text-sm ml-2 capitalize">

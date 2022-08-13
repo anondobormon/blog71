@@ -22,7 +22,7 @@ const upload = require("../multer/upload");
 const { isAuthenticatedUser, authorizedRole } = require("../middleware/auth");
 
 //Register a User
-router.post("/register", upload.single("file"), registerUser);
+router.post("/register", registerUser);
 
 //Login user
 router.post("/login", loginUser);

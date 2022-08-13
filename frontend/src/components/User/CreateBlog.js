@@ -26,7 +26,7 @@ export default function CreateBlog() {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setCoverImagePreview(reader.result);
-          setCoverImage(e.target.files[0]);
+          setCoverImage(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);

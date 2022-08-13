@@ -20,6 +20,7 @@ import About from "../components/User/About";
 import CreateBlog from "../components/User/CreateBlog";
 import Login from "../components/User/Login";
 import Register from "../components/User/Register";
+import Res123 from "../components/User/Res123";
 import UserBlogs from "../components/User/UserBlogs";
 import UserContainer from "../components/User/UserContainer";
 import UserProfile from "../components/User/UserProfile";
@@ -30,10 +31,12 @@ function Routing() {
       <Route path="/" element={<Home />}>
         <Route index element={<Header />} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/crop" element={<Crop />} /> */}
         <Route path="/blogs" element={<Blogs />}>
           <Route path=":query" element={<Blogs />} />
         </Route>
         <Route path="/register" element={<Register />} />
+        <Route path="/register123" element={<Res123 />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/profile/:username/:id" element={<UserProfile />}>
           <Route index element={<UserContainer />} />

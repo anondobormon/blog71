@@ -17,6 +17,7 @@ import {
   COMMENT_RESET,
 } from "../../constants/blogConstants";
 import MetaData from "../../utils/MetaData";
+import slugify from "../../utils/SlugGenerator";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
 import Nav from "../Navbar/Nav";
@@ -96,7 +97,7 @@ export default function BlogDetails() {
 
     dispatch(getBlogDetails(id));
   }, [dispatch, error, id, success, isDeleted]);
-
+  console.log(blog);
   useEffect(() => {
     if (blogsError) {
       toast.error(blogsError, {
@@ -128,6 +129,7 @@ export default function BlogDetails() {
   };
 
   const handleDeleteComment = (mid) => {
+    console.log(mid);
     dispatch(deleteComment(id, mid));
     blog = blog.comments.filter((item) => item._id !== mid);
   };
@@ -150,9 +152,9 @@ export default function BlogDetails() {
                 component={
                   <div className="md:grid grid-cols-12 gap-3 px-2">
                     <div className="col-span-9">
-                      <div className="max-h-96 overflow-hidden rounded-md">
+                      <div className="overflow-hidden rounded-md">
                         <img
-                          src={PF + blog.coverImage}
+                          src={blog.coverImage.url}
                           alt="fingerprint recognition"
                           className="w-full rounded-md"
                         />
@@ -179,9 +181,9 @@ export default function BlogDetails() {
                           </div>
                         </div>
 
-                        <p className="text-base leading-6 text-justify text-gray-600 mt-2">
+                        <div className="text-base ml-5 bg-white leading-6 text-justify text-gray-600 mt-2">
                           {parse(blog.description)}
-                        </p>
+                        </div>
 
                         {/* comments */}
 
@@ -194,14 +196,14 @@ export default function BlogDetails() {
                             ? blog.comments.map((comment, index) => (
                                 <div
                                   key={index}
-                                  className="border my-2 p-2 w-full md:max-w-lg"
+                                  className="border bg-white rounded my-2 p-2 w-full md:max-w-lg"
                                 >
                                   <div className="flex  items-center justify-between">
                                     <div className="flex  items-center gap-2">
                                       <div className="w-10 h-10 rounded-full overflow-hidden">
                                         <img
                                           className="w-full"
-                                          src={PF + comment.profilePicture}
+                                          src={comment?.profilePicture.url}
                                           alt=""
                                         />
                                       </div>
@@ -217,7 +219,6 @@ export default function BlogDetails() {
                                           setAnchorEl(event.currentTarget);
                                           if (user._id === comment.user) {
                                             setCommentId(comment._id);
-                                            console.log(true);
                                           } else {
                                             setCommentId("");
                                           }
@@ -240,9 +241,17 @@ export default function BlogDetails() {
                                         }}
                                       >
                                         <div className="p-2">
-                                          <p className="text-xs hover:text-indigo-500 mb-2 cursor-pointer font-normal">
+                                          <Link
+                                            to={`/profile/${
+                                              blog && slugify(blog?.user?.name)
+                                            }/${blog?.user?._id}/about`}
+                                            className="text-xs hover:text-indigo-500 mb-2 cursor-pointer font-normal"
+                                          >
                                             View Profile
-                                          </p>
+                                          </Link>
+
+                                          <br />
+
                                           {commentId &&
                                             user._id === comment.user && (
                                               <button
@@ -263,7 +272,7 @@ export default function BlogDetails() {
 
                                   <div className="p-2 max-w-xl rounded  ">
                                     <p
-                                      className={`bg-indigo-200 w-fit p-2 rounded-md text-xs`}
+                                      className={`bg-indigo-100 w-fit p-2 rounded-md text-xs`}
                                     >
                                       {comment.message}
                                     </p>
@@ -282,6 +291,7 @@ export default function BlogDetails() {
                             </div>
                           )}
 
+                          {/* Wite comment on dialog box */}
                           <Dialog
                             className=""
                             open={dialog}
@@ -293,7 +303,7 @@ export default function BlogDetails() {
                               <DialogContent className="p-0">
                                 <textarea
                                   placeholder="Write your comment about this product."
-                                  className="border w-full p-2 h-36"
+                                  className="border rounded border-indigo-500 focus:outline-indigo-500 bg-white text-sm w-full p-2 h-36"
                                   value={comment}
                                   onChange={(e) => setComment(e.target.value)}
                                 ></textarea>
@@ -326,7 +336,7 @@ export default function BlogDetails() {
                     <div className="col-span-3">
                       <FollowCard follower={blog?.user} show={true} />
 
-                      <div className="my-4 border rounded p-4">
+                      <div className="my-4 border bg-white rounded p-4">
                         <div className="flex justify-between items-center">
                           <h2 className="text-sm">Blogs</h2>
                           <Link
@@ -340,7 +350,7 @@ export default function BlogDetails() {
                           {userBlogs &&
                             userBlogs.slice(0, 6).map((item, index) => (
                               <Link to={`/blog/${item._id}`} key={index}>
-                                <p className="font-bold my-2 line-shorter hover:text-indigo-400 ">
+                                <p className="font-normal my-2 line-shorter hover:text-indigo-400 ">
                                   {index + 1}. {item.title}
                                 </p>
                               </Link>

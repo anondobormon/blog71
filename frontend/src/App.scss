@@ -6,7 +6,16 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
-
+.bgcustom {
+  background-image: radial-gradient(
+    circle,
+    #cdd3ff,
+    #cdcff0,
+    #cbcbe1,
+    #c8c7d2,
+    #c4c4c4
+  );
+}
 .line-shorter {
   white-space: nowrap;
   width: 230px;
@@ -15,4 +24,8 @@
 }
 .m-h-80vh {
   max-height: 80vh;
+}
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

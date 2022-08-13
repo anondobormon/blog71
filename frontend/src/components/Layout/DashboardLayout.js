@@ -484,7 +484,7 @@ export default function DashboardLayout() {
                         <div className="relative">
                           <img
                             className="rounded-full h-10 w-10 object-cover"
-                            src={PF + user?.profilePicture}
+                            src={user?.profilePicture?.url}
                             alt="avatar"
                           />
                           <div className="w-2 h-2 rounded-full bg-green-400 border border-white absolute inset-0 mb-0 mr-0 m-auto" />

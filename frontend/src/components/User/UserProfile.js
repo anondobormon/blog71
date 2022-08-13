@@ -74,6 +74,8 @@ export default function UserProfile() {
   }, [dispatch, error, id, blogsError]);
   let followUser = loggedUser?.followings?.find((item) => item._id === id);
 
+  console.log(user);
+
   return (
     <>
       {loading ? (
@@ -97,7 +99,7 @@ export default function UserProfile() {
                       <div className="inset-0 m-auto w-32 h-32 absolute bottom-0 -mb-16 xl:ml-10 rounded-full overflow-hidden border-8 shadow border-slate-400">
                         <img
                           className="w-full h-full overflow-hidden object-cover rounded"
-                          src={PF + user.profilePicture}
+                          src={user?.profilePicture?.url}
                           alt=""
                         />
                       </div>

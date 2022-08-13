@@ -8,23 +8,33 @@ const User = require("../models/userModel");
 const Category = require("../models/categoryModel");
 const ErrorHandler = require("../utils/errorHandler");
 const ApiFeatures = require("../utils/ApiFeatures");
+const cloudinary = require("cloudinary").v2;
 var fs = require("fs");
 
 //create Blog
 exports.createBlog = asyncError(async (req, res, next) => {
-  const { title, category, description } = req.body;
+  const { title, category, description, file: blogImg } = req.body;
 
   let categoryData = await Category.findOne({ category: category });
   if (!categoryData) {
     return next(new ErrorHandler("Category not found!", 404));
   }
 
+  let myCloud = await cloudinary.uploader.upload(blogImg, {
+    folder: "blog71/blogImage",
+    width: "950",
+    crop: "scale",
+  });
+
   let newBlog = await Blog.create({
     user: req.user._id,
     title,
     category,
     description,
-    coverImage: req.file.filename,
+    coverImage: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
   });
 
   categoryData.blogs.push(newBlog._id);
@@ -264,7 +274,6 @@ exports.updateComment = asyncError(async (req, res, next) => {
 exports.deleteMessage = asyncError(async (req, res, next) => {
   const blog = await Blog.findById(req.params.cid);
   if (!blog) return next(new ErrorHandler("Blog not found!", 404));
-
   let newComments = blog.comments.reduce((acc, cur) => {
     if (cur._id.toString() !== req.params.mid.toString()) {
       acc.push(cur);

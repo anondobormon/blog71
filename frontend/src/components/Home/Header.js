@@ -11,6 +11,7 @@ import Card from "../Blog/Card/Card";
 import Container from "../Layout/Container";
 import Loader from "../Layout/Loader";
 import Nav from "../Navbar/Nav";
+import "./Header.scss";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function Header() {
   const { blogs, error, loading, count } = useSelector((state) => state.blogs);
   const { users, error: usersError } = useSelector((state) => state.users);
   const { category } = useSelector((state) => state.category);
+  console.log(category);
 
   useEffect(() => {
     dispatch(getBlogs(keyword, pageValue));
@@ -44,7 +46,7 @@ export default function Header() {
     dispatch(getAllCategory());
     dispatch(getAllUsers());
   }, [dispatch, error, usersError]);
-
+  console.log(users);
   return (
     <div className="">
       {loading ? (
@@ -70,7 +72,10 @@ export default function Header() {
                     <div className="md:grid grid-cols-2 gap-3">
                       {blogs &&
                         blogs.map((blog, index) => (
-                          <div key={index} className="col-span-1 bg-white">
+                          <div
+                            key={index}
+                            className="col-span-1 bg-white shadow"
+                          >
                             <Card blog={blog} />
                           </div>
                         ))}
@@ -93,7 +98,7 @@ export default function Header() {
                               <div className="w-10 h-10 rounded-full border-2 flex items-center content-center overflow-hidden ">
                                 <img
                                   className="w-full"
-                                  src={PF + blog.user.profilePicture}
+                                  src={blog?.user.profilePicture.url}
                                   alt=""
                                 />
                               </div>
@@ -116,7 +121,7 @@ export default function Header() {
                               >
                                 <img
                                   className="w-full"
-                                  src={PF + user.profilePicture}
+                                  src={user?.profilePicture.url}
                                   alt=""
                                 />
                               </div>

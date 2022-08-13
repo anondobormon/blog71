@@ -31,7 +31,8 @@ const { isAuthenticatedUser, authorizedRole } = require("../middleware/auth");
 const upload = require("../multer/upload");
 
 //Create a Blog
-router.post("/create", upload.single("file"), isAuthenticatedUser, createBlog);
+// router.post("/create", upload.single("file"), isAuthenticatedUser, createBlog);
+router.post("/create", isAuthenticatedUser, createBlog);
 
 //Get all Blogs --Admin
 router.get(
@@ -87,11 +88,17 @@ router.delete("/comment/:cid/:mid", isAuthenticatedUser, deleteMessage);
 //Category create
 router.post(
   "/admin/category/create",
-  upload.single("file"),
   isAuthenticatedUser,
   authorizedRole("admin"),
   createCategory
 );
+// router.post(
+//   "/admin/category/create",
+//   upload.single("file"),
+//   isAuthenticatedUser,
+//   authorizedRole("admin"),
+//   createCategory
+// );
 
 //Category get
 router.get("/category/all", getAllCategory);

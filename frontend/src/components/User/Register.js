@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -38,15 +38,21 @@ export default function Register() {
       toast.error("Select Profile Picture", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-    }
-    let formData = new FormData();
-    formData.append("file", avatar);
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
+    } else {
+      const myForm = new FormData();
+      myForm.set("name", name);
+      myForm.set("email", email);
+      myForm.set("password", password);
+      myForm.set("file", avatar);
 
-    if (email && password && name && avatar) {
-      dispatch(register(formData));
+      // let formData = {
+      //   name,
+      //   email,
+      //   password,
+      //   avatar,
+      // };
+
+      dispatch(register(myForm));
     }
   };
   const registerDataChange = (e) => {
@@ -56,7 +62,7 @@ export default function Register() {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
-          setAvatar(e.target.files[0]);
+          setAvatar(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -87,42 +93,12 @@ export default function Register() {
           <MetaData title="User Login" description="User Login" />
           <div className="bg-indigo-50">
             <div className="px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
-              <div className="xl:w-1/3 md:w-1/2 lg:ml-16 ml-8 md:mt-0 mt-6">
-                <div className="flex items-start mt-8">
-                  <p className="sm:text-2xl text-xl leading-7 text-gray-600 pl-2.5">
-                    Generating random paragraphs can be an excellent way for
-                    writers to get their creative flow going at the beginning of
-                    the day. The writer has no idea what topic the random
-                    paragraph will be about when it appears
-                  </p>
-                </div>
-                <div className="flex items-center pl-8 mt-10">
-                  <div className="w-8 h-8">
-                    <img
-                      src="https://i.ibb.co/xLtZCRT/Mask-Group.png"
-                      alt="profile picture"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="ml-2">
-                    <p className="text-sm font-medium leading-none text-gray-800">
-                      Anita Jane
-                    </p>
-                    <p className="text-sm font-medium leading-none text-gray-600 mt-1 cursor-pointer hover:underline">
-                      See profile
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div className="bg-white shadow-lg rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full sm:px-6 sm:py-10 px-2 py-6">
-                <p
-                  tabIndex={0}
-                  className="focus:outline-none py-4 text-2xl font-extrabold leading-6 text-gray-800"
-                >
+                <p className="focus:outline-none py-4 text-2xl font-extrabold leading-6 text-gray-800">
                   Register to your account
                 </p>
 
-                <form encType="multipart/form-data">
+                <form encType="multipart/form-data" onSubmit={handleLogin}>
                   <div>
                     <label
                       htmlFor="avatar"
@@ -230,14 +206,17 @@ export default function Register() {
                     </Link>
                   </p>
                   <div className="mt-8">
-                    <button
-                      onClick={handleLogin}
-                      role="button"
+                    <input
                       className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
-                      disabled={loading ? true : false}
+                      type="submit"
+                      value="Register my account"
+                    />
+                    {/* <input
+                      onClick={handleLogin}
+                      className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
                     >
                       Register my account
-                    </button>
+                    /> */}
                   </div>
                 </form>
               </div>

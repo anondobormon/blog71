@@ -35,14 +35,15 @@ import {
 } from "../constants/userConstants";
 
 //Register a user
-export const register = (formData) => async (dispatch) => {
+export const register = (newData) => async (dispatch) => {
+  console.log(newData);
   try {
     dispatch({
       type: REGISTER_REQUEST,
     });
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.post("/api/blog/register", formData, config);
+    const { data } = await axios.post("/api/blog/register", newData, config);
 
     dispatch({
       type: REGISTER_SUCCESS,

@@ -13,7 +13,14 @@ const categorySchema = new mongoose.Schema(
       required: true,
     },
     coverImage: {
-      type: String,
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
     blogs: {
       type: Array,

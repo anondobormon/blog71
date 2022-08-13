@@ -36,8 +36,14 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   profilePicture: {
-    type: String,
-    default: "avatar.png",
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
   },
   coverPicture: {
     type: String,

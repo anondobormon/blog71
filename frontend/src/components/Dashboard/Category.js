@@ -32,7 +32,7 @@ export default function Category() {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setCoverImagePreview(reader.result);
-          setCoverImage(e.target.files[0]);
+          setCoverImage(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -85,7 +85,7 @@ export default function Category() {
             <div className="w-8 h-8 rounded-full overflow-hidden">
               <img
                 className="object-cover h-8 w-8"
-                src={PF + params.getValue(params.id, "coverImage")}
+                src={params.getValue(params.id, "coverImage")}
                 alt=""
               />
             </div>
@@ -135,7 +135,7 @@ export default function Category() {
       rows.push({
         id: item._id,
         category: item.category,
-        coverImage: item.coverImage,
+        coverImage: item.coverImage.url,
         blogs: item.blogs.length,
       });
     });

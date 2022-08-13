@@ -3,11 +3,13 @@ const asyncError = require("../middleware/asyncError");
 const Category = require("../models/categoryModel");
 const Blog = require("../models/blogModel");
 const ErrorHandler = require("../utils/errorHandler");
+const cloudinary = require("cloudinary").v2;
 var fs = require("fs");
 
 //Create Category --Admin
 exports.createCategory = asyncError(async (req, res, next) => {
   const category = await Category.findOne({ category: req.body.category });
+  let coverImg = req.body.file;
   if (category) {
     // removed image
     fs.unlinkSync(
@@ -15,10 +17,20 @@ exports.createCategory = asyncError(async (req, res, next) => {
     );
     return next(new ErrorHandler("Category already exists", 409));
   }
+
+  let myCloud = await cloudinary.uploader.upload(coverImg, {
+    folder: "blog71/categoryImage",
+    width: "1050",
+    crop: "scale",
+  });
+
   await Category.create({
     user: req.user._id,
     category: req.body.category.toLowerCase().trim(),
-    coverImage: req.file?.filename,
+    coverImage: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
     description: req.body.description,
   });
 

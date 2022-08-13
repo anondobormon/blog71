@@ -8,11 +8,7 @@ export default function BlogCard({ blog, heading }) {
   return (
     <div className="bg-white">
       <div className="max-h-96 overflow-hidden">
-        <img
-          className="w-full rounded"
-          src={PF + blog?.coverImage.trim()}
-          alt=""
-        />
+        <img className="w-full rounded" src={blog?.coverImage.url} alt="" />
       </div>
       {/* <img src="/uploads/cover.jpg" alt="" /> */}
 

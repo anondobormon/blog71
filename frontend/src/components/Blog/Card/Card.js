@@ -30,7 +30,7 @@ export default function Card({ blog }) {
     <div className="w-full rounded overflow-hidden mb-4">
       <div className=" max-h-52 overflow-hidden z-10 relative">
         <Link to={`/blog/${blog?._id}`} className="">
-          <img className="w-full" src={PF + blog?.coverImage} alt="" />
+          <img className="w-full" src={blog?.coverImage.url} alt="" />
         </Link>
       </div>
 
