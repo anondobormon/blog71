@@ -6,7 +6,6 @@ import slugify from "../../../utils/SlugGenerator";
 
 export default function FollowCard({ follower, show }) {
   const dispatch = useDispatch();
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const { user: loadUser } = useSelector((state) => state.user);
 
