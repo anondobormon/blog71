@@ -3,7 +3,7 @@ import { Dialog, DialogContent, Popover } from "@mui/material";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   clearError,
@@ -25,8 +25,13 @@ import SubHeader from "../SubHeader/SubHeader";
 import FollowCard from "./Follower/FollowCard";
 
 export default function BlogDetails() {
-  let { blog, error, loading } = useSelector((state) => state.blogs);
+  const navigate = useNavigate();
+
+  let { blog, error, loading, statusCode } = useSelector(
+    (state) => state.blogs
+  );
   const { user, isAuthenticated } = useSelector((state) => state.user);
+
   const { success, error: commentError } = useSelector(
     (state) => state.newComment
   );
@@ -94,10 +99,13 @@ export default function BlogDetails() {
       });
       dispatch(clearError());
     }
+    if (statusCode === 404) {
+      navigate("/notfound");
+    }
 
     dispatch(getBlogDetails(id));
   }, [dispatch, error, id, success, isDeleted]);
-  console.log(blog);
+
   useEffect(() => {
     if (blogsError) {
       toast.error(blogsError, {
@@ -117,19 +125,17 @@ export default function BlogDetails() {
   let data = {
     message: comment,
   };
+
   const commentSubmitHandler = (e) => {
     e.preventDefault();
 
     if (comment) {
       dispatch(createComment(id, data));
-
-      console.log(blog);
       setDialog(false);
     }
   };
 
   const handleDeleteComment = (mid) => {
-    console.log(mid);
     dispatch(deleteComment(id, mid));
     blog = blog.comments.filter((item) => item._id !== mid);
   };
@@ -140,7 +146,7 @@ export default function BlogDetails() {
         <Loader />
       ) : (
         <div>
-          {blog && (
+          {blog ? (
             <div>
               <Nav />
               <MetaData
@@ -150,9 +156,9 @@ export default function BlogDetails() {
               <SubHeader blog={blog} />
               <Container
                 component={
-                  <div className="md:grid grid-cols-12 gap-3 px-2">
-                    <div className="col-span-9">
-                      <div className="overflow-hidden rounded-md">
+                  <div className="md:flex gap-3 px-2 justify-center items-center md:items-start">
+                    <div className="w-full bg-white overflow-hidden p-4">
+                      <div className="overflow-hidden w-full rounded-md">
                         <img
                           src={blog.coverImage.url}
                           alt="fingerprint recognition"
@@ -333,7 +339,7 @@ export default function BlogDetails() {
 
                     {/* -------------------------------------- */}
 
-                    <div className="col-span-3">
+                    <div className="w-96 mt-10 mx-auto md:mt-0 top-20 sticky">
                       <FollowCard follower={blog?.user} show={true} />
 
                       <div className="my-4 border bg-white rounded p-4">
@@ -362,6 +368,8 @@ export default function BlogDetails() {
                 }
               />
             </div>
+          ) : (
+            <Loader />
           )}
         </div>
       )}

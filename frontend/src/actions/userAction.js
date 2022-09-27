@@ -32,11 +32,13 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  VERIFIED_USER_FAIL,
+  VERIFIED_USER_REQUEST,
+  VERIFIED_USER_SUCCESS,
 } from "../constants/userConstants";
 
 //Register a user
 export const register = (newData) => async (dispatch) => {
-  console.log(newData);
   try {
     dispatch({
       type: REGISTER_REQUEST,
@@ -47,7 +49,7 @@ export const register = (newData) => async (dispatch) => {
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -73,11 +75,33 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Verify User
+export const verifyUser = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: VERIFIED_USER_REQUEST,
+    });
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const url = `/api/blog/user/${id}/verify/${token}`;
+    const { data } = await axios.get(url, config);
+    dispatch({
+      type: VERIFIED_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: VERIFIED_USER_FAIL,
       payload: error.response.data.message,
     });
   }
@@ -92,7 +116,6 @@ export const getAllUsers = () => async (dispatch) => {
     const { data } = await axios.get("/api/blog/users/all");
 
     dispatch({ type: ALL_USER_SUCCESS, payload: data.users });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: ALL_USER_FAIL,

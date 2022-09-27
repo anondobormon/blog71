@@ -9,10 +9,13 @@ const sendToken = require("../utils/jwtToken");
 const ErrorHandler = require("../utils/errorHandler");
 // const { cloudinary } = require("../utils/cloudinary");
 const cloudinary = require("cloudinary").v2;
+const Token = require("../models/tokenModel");
 
 //Register a user
 exports.registerUser = asyncError(async (req, res, next) => {
   const avatar = req.body.file;
+
+  console.log(avatar);
 
   let myCloud = await cloudinary.uploader.upload(avatar, {
     folder: "blog71/avatars",
@@ -20,8 +23,8 @@ exports.registerUser = asyncError(async (req, res, next) => {
     crop: "scale",
   });
 
-  // console.log(myCloud);
-  const { email, name, password } = req.body;
+  const { email, name, password, profilePicture } = req.body;
+  console.log(email);
   const user = await User.create({
     name,
     email,
@@ -31,8 +34,9 @@ exports.registerUser = asyncError(async (req, res, next) => {
       url: myCloud.secure_url,
     },
   });
+  // console.log(user);
 
-  sendToken(user, 201, res);
+  next();
 });
 
 //Login a user
@@ -49,7 +53,27 @@ exports.loginUser = asyncError(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid Email or Password"));
   }
-  sendToken(user, 200, res);
+  next();
+});
+
+//Verify users
+exports.verifyUser = asyncError(async (req, res, next) => {
+  const { id, token } = req.params;
+
+  const user = await User.findOne({ _id: id });
+  if (!user) return next(new ErrorHandler("Invalid Link!", 404));
+
+  const extToken = await Token.findOne({
+    userId: id,
+    token,
+  });
+  if (!extToken) return next(new ErrorHandler("Invalid Link!", 404));
+
+  user.verified = true;
+  await user.save();
+  await extToken.remove();
+
+  sendToken(user, 201, res);
 });
 
 //Logout a user

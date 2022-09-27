@@ -18,10 +18,6 @@ const userSchema = new mongoose.Schema({
   dateOfBirth: {
     type: String,
   },
-  phone: {
-    type: String,
-    unique: true,
-  },
 
   email: {
     type: String,
@@ -35,15 +31,19 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be grater then 8 characters!"],
     select: false,
   },
+
   profilePicture: {
     public_id: {
-      type: String,
-      required: true,
+      type: "string",
     },
     url: {
-      type: String,
-      required: true,
+      type: "string",
     },
+  },
+
+  verified: {
+    type: Boolean,
+    default: false,
   },
   coverPicture: {
     type: String,

@@ -37,6 +37,9 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  VERIFIED_USER_FAIL,
+  VERIFIED_USER_REQUEST,
+  VERIFIED_USER_SUCCESS,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -47,15 +50,23 @@ export const userReducer = (state = { user: {} }, action) => {
       return {
         loading: true,
         isAuthenticated: false,
+        verified: false,
       };
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
     case LOAD_USER_SUCCESS:
       return {
         loading: false,
-        isAuthenticated: true,
         user: action.payload,
+        isAuthenticated: true,
       };
+    case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
+      return {
+        loading: false,
+        isAuthenticated: action.payload.isAuthenticated,
+        user: action.payload.user,
+        message: action.payload.message,
+      };
+
     case LOGOUT_SUCCESS:
       return {
         loading: false,
@@ -78,6 +89,42 @@ export const userReducer = (state = { user: {} }, action) => {
         user: null,
         error: action.payload,
       };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//Verify Reducer
+export const verifyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case VERIFIED_USER_REQUEST:
+      return {
+        loading: true,
+        isAuthenticated: false,
+        verified: false,
+      };
+
+    case VERIFIED_USER_SUCCESS:
+      return {
+        loading: false,
+        isAuthenticated: action.payload.isAuthenticated,
+        message: action.payload.message,
+      };
+    case VERIFIED_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        error: action.payload,
+      };
+
     case CLEAR_ERROR:
       return {
         ...state,

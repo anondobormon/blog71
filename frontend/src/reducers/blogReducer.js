@@ -99,7 +99,8 @@ export const blogReducer = (state = { blogs: [] }, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload?.data.message,
+        statusCode: action.payload.status,
       };
     case UPDATE_BLOG_RESET:
       return {

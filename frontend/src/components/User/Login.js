@@ -14,7 +14,9 @@ export default function Login() {
   const navigate = useNavigate();
   let location = useLocation();
 
-  const { error, isAuthenticated, user } = useSelector((state) => state.user);
+  const { error, isAuthenticated, user, message, verified } = useSelector(
+    (state) => state.user
+  );
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -32,6 +34,11 @@ export default function Login() {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       dispatch(clearError());
+    }
+    if (!verified) {
+      toast.error(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
     if (isAuthenticated) {
       toast.success("Login Success", {

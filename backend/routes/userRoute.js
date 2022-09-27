@@ -17,15 +17,17 @@ const {
   saveBlogs,
   getLoggedInUser,
   updateUser,
+  verifyUser,
 } = require("../controller/userController");
 const upload = require("../multer/upload");
 const { isAuthenticatedUser, authorizedRole } = require("../middleware/auth");
+const { isvarified } = require("../middleware/isvarified");
 
 //Register a User
-router.post("/register", registerUser);
+router.post("/register", registerUser, isvarified);
 
 //Login user
-router.post("/login", loginUser);
+router.post("/login", loginUser, isvarified);
 
 //Logout a user
 router.get("/logout", logoutUser);
@@ -77,5 +79,8 @@ router.put("/user/:id/follow", isAuthenticatedUser, followUser);
 
 //UnFollow a user
 router.put("/user/:id/unfollow", isAuthenticatedUser, unFollowUser);
+
+//Verify user
+router.get("/user/:id/verify/:token", verifyUser);
 
 module.exports = router;

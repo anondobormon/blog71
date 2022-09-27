@@ -23,7 +23,6 @@ export default function Header() {
   const { blogs, error, loading, count } = useSelector((state) => state.blogs);
   const { users, error: usersError } = useSelector((state) => state.users);
   const { category } = useSelector((state) => state.category);
-  console.log(category);
 
   useEffect(() => {
     dispatch(getBlogs(keyword, pageValue));
@@ -45,7 +44,6 @@ export default function Header() {
     dispatch(getAllCategory());
     dispatch(getAllUsers());
   }, [dispatch, error, usersError]);
-  console.log(users);
   return (
     <div className="">
       {loading ? (
@@ -120,7 +118,7 @@ export default function Header() {
                               >
                                 <img
                                   className="w-full"
-                                  src={user?.profilePicture.url}
+                                  src={user?.profilePicture?.url}
                                   alt=""
                                 />
                               </div>

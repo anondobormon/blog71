@@ -25,7 +25,6 @@ export default function UserProfile() {
   let navigate = useNavigate();
 
   const { user, loading, error } = useSelector((state) => state.userDetails);
-  console.log(user);
   const { user: loggedUser } = useSelector((state) => state.user);
   const { blogs: userBlogs, error: blogsError } = useSelector(
     (state) => state.userBlogs
@@ -74,8 +73,6 @@ export default function UserProfile() {
   }, [dispatch, error, id, blogsError]);
   let followUser = loggedUser?.followings?.find((item) => item._id === id);
 
-  console.log(user);
-
   return (
     <>
       {loading ? (
@@ -92,7 +89,7 @@ export default function UserProfile() {
                   <div className="bg-white  px-2 md:px-0 dark:bg-gray-800 shadow">
                     <div className="relative">
                       <img
-                        className="h-56 shadow  w-full object-cover object-center"
+                        className="h-36 shadow  w-full object-cover object-center"
                         src={PF + "cover.jpg"}
                         alt=""
                       />
@@ -173,8 +170,8 @@ export default function UserProfile() {
                     {/* Sidebar */}
 
                     <div className="w-full px-2 md:px-0">
-                      <div className="md:grid grid-cols-5">
-                        <div className="col-span-1 border-r">
+                      <div className="md:flex items-start ">
+                        <div className="w-72 border-r">
                           <NavLink
                             className={({ isActive }) =>
                               `p-2 my-1 hover:bg-indigo-300 hover:text-white block w-full   ${
@@ -254,7 +251,7 @@ export default function UserProfile() {
                             Following
                           </NavLink>
                         </div>
-                        <div className="col-span-4">
+                        <div className="w-full">
                           <UserContainer user={user} />
                         </div>
                       </div>

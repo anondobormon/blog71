@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { follow, unFollow } from "../../../actions/userAction";
+import { toast } from "react-toastify";
+import { follow, loadUser, unFollow } from "../../../actions/userAction";
+import { FOLLOW_RESET } from "../../../constants/userConstants";
 import slugify from "../../../utils/SlugGenerator";
 
 export default function FollowCard({ follower, show }) {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const { user: loadUser } = useSelector((state) => state.user);
+  const { success: followSuccess, message } = useSelector(
+    (state) => state.follow
+  );
+  useEffect(() => {
+    if (followSuccess) {
+      toast.success(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      dispatch({ type: FOLLOW_RESET });
+      dispatch(loadUser());
+    }
+  }, [followSuccess]);
 
   return (
     <div className="col-span-1">
@@ -16,7 +30,7 @@ export default function FollowCard({ follower, show }) {
           <h2 className="text-sm pb-4">About post</h2>
           <div className=" w-20 h-20 mx-auto border rounded-full overflow-hidden">
             <img
-              className="w-full"
+              className="flex h-full w-full items-center object-cover"
               src={follower?.profilePicture.url}
               alt="profile"
             />
@@ -35,11 +49,9 @@ export default function FollowCard({ follower, show }) {
           >
             View Profile
           </Link>
-          {show && loadUser?._id !== follower._id && (
+          {show && user?._id !== follower._id && (
             <>
-              {loadUser?.followings.find(
-                (item) => item._id === follower._id
-              ) ? (
+              {user?.followings.find((item) => item._id === follower._id) ? (
                 <button
                   onClick={function () {
                     dispatch(unFollow(follower._id));

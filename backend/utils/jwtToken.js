@@ -9,8 +9,10 @@ const sendToken = (user, statusCode, res) => {
     httpOnly: true,
   };
   res.status(statusCode).cookie("token", token, options).json({
-    success: true,
+    verified: true,
     user,
+    isAuthenticated: true,
+    message: "You are logged in successfully",
     token,
   });
 };

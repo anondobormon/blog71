@@ -24,6 +24,7 @@ import Res123 from "../components/User/Res123";
 import UserBlogs from "../components/User/UserBlogs";
 import UserContainer from "../components/User/UserContainer";
 import UserProfile from "../components/User/UserProfile";
+import UserVerify from "../components/UserVerify";
 
 function Routing() {
   return (
@@ -36,6 +37,7 @@ function Routing() {
           <Route path=":query" element={<Blogs />} />
         </Route>
         <Route path="/register" element={<Register />} />
+        <Route path="/user/:id/:token" element={<UserVerify />} />
         <Route path="/register123" element={<Res123 />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/profile/:username/:id" element={<UserProfile />}>

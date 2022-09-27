@@ -302,17 +302,20 @@ exports.deleteMessage = asyncError(async (req, res, next) => {
 exports.nodeMail = asyncError(async (req, res, next) => {
   let transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
+    // host: "smtp.gmail.com",
+    // port: 465,
+    // secure: true,
     auth: {
       user: process.env.MAIL,
       pass: process.env.PASSWORD,
     },
   });
 
-  let info = transporter.sendMail({
+  let info = await transporter.sendMail({
     from: process.env.MAIL,
     to: "anondokpi@gmail.com",
     subject: "Testing ",
-    text: "Testing something env",
+    text: "Testing something with node mail...!",
   });
 
   res.status(200).json({

@@ -25,7 +25,7 @@ export default function Register() {
   let location = useLocation();
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
-  const { error, isAuthenticated, loading } = useSelector(
+  const { error, isAuthenticated, loading, message, verified } = useSelector(
     (state) => state.user
   );
 
@@ -58,6 +58,7 @@ export default function Register() {
   const registerDataChange = (e) => {
     //For preview avatar image
     if (e.target.name === "avatar") {
+      setAvatar(e.target.files[0]);
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -77,6 +78,11 @@ export default function Register() {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       dispatch(clearError());
+    }
+    if (!verified) {
+      toast.error(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
     if (isAuthenticated) {
       toast.success("Login Success", {
@@ -204,6 +210,9 @@ export default function Register() {
                     >
                       Sign in here
                     </Link>
+                  </p>
+                  <p className="text-red-500 font-medium text-sm">
+                    {!verified && message}
                   </p>
                   <div className="mt-8">
                     <input

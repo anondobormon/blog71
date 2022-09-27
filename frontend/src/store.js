@@ -14,6 +14,7 @@ import {
   update,
   userDetails,
   userReducer,
+  verifyReducer,
 } from "./reducers/userReducer";
 
 const store = configureStore({
@@ -30,6 +31,7 @@ const store = configureStore({
     status: statusReducer,
     isBlogSave: checkSavedBlog,
     update: update,
+    verifyUser: verifyReducer,
   },
 });
 

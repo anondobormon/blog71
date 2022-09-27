@@ -68,7 +68,6 @@ export const getBlogs =
       });
 
       const link = `/api/blog/all?keyword=${keyword}&page=${currentPage}&perpage=12`;
-      console.log(link);
       const { data } = await axios.get(link);
 
       dispatch({
@@ -145,7 +144,7 @@ export const getBlogDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BLOG_DETAILS_FAIL,
-      payload: error.response?.data.message,
+      payload: error.response,
     });
   }
 };
@@ -313,7 +312,6 @@ export const saveBlog = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.put(`/api/blog/save/${id}`);
-    console.log(data);
     dispatch({
       type: IS_SAVED_SUCCESS,
       payload: data.isSaved,
