@@ -35,7 +35,7 @@ export default function Login() {
       });
       dispatch(clearError());
     }
-    if (!verified) {
+    if (verified === false) {
       toast.error(message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

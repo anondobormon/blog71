@@ -16,6 +16,8 @@ export default function CategoryPage() {
     (state) => state.category
   );
 
+  console.log(categoryData);
+
   useEffect(() => {
     dispatch(getACategory(category));
   }, [dispatch, category]);
@@ -143,7 +145,7 @@ export default function CategoryPage() {
                   <div className="relative w-full h-64 lg:h-auto lg:w-1/2 rounded-t lg:rounded-t-none lg:rounded-r inline-block">
                     <img
                       className="w-full h-full absolute inset-0 object-cover rounded-t lg:rounded-r lg:rounded-t-none"
-                      src={PF + categoryData.coverImage}
+                      src={categoryData.coverImage?.url}
                       alt="banner"
                     />
                   </div>

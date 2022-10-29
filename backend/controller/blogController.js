@@ -212,7 +212,9 @@ exports.deleteBlog = asyncError(async (req, res, next) => {
   }
 
   // removed image
-  fs.unlinkSync(`${__dirname}/../public/uploads/${blog.coverImage?.trim()}`);
+  // fs.unlinkSync(`${__dirname}/../public/uploads/${blog.coverImage?.trim()}`);
+
+  await cloudinary.uploader.destroy(blog.coverImage.public_id);
 
   await category.updateOne({
     $pull: { blogs: blog._id },

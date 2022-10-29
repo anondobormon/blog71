@@ -8,6 +8,7 @@ import {
   BLOG_DELETE_SUCCESS,
   BLOG_DETAILS_FAIL,
   BLOG_DETAILS_REQUEST,
+  BLOG_DETAILS_RESET,
   BLOG_DETAILS_SUCCESS,
   CLEAR_ERROR,
   COMMENT_DELETE_FAIL,
@@ -101,6 +102,12 @@ export const blogReducer = (state = { blogs: [] }, action) => {
         loading: false,
         error: action.payload?.data.message,
         statusCode: action.payload.status,
+      };
+    case BLOG_DETAILS_RESET:
+      return {
+        ...state,
+        loading: false,
+        statusCode: null,
       };
     case UPDATE_BLOG_RESET:
       return {

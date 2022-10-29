@@ -90,7 +90,7 @@ export default function UserProfile() {
                     <div className="relative">
                       <img
                         className="h-36 shadow  w-full object-cover object-center"
-                        src={PF + "cover.jpg"}
+                        src="https://i.ibb.co/r6NwQMy/pexels-kindel-media-7054754.jpg"
                         alt=""
                       />
                       <div className="inset-0 m-auto w-32 h-32 absolute bottom-0 -mb-16 xl:ml-10 rounded-full overflow-hidden border-8 shadow border-slate-400">
